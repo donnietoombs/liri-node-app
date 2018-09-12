@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/donnietoombs/liri-node-app#readme",
   "dependencies": {
+    "dotenv": "^6.0.0",
+    "fs": "0.0.1-security",
+    "node-spotify-api": "^1.0.7",
     "request": "^2.88.0"
   }
 }
