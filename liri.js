@@ -2,6 +2,7 @@ require("dotenv").config();
 
 var keys = require("./keys");
 var request = require('request');
+var moment = require('moment');
 
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
@@ -55,7 +56,36 @@ switch (action) {
     break;
 }
 
-function showBands() { }
+function showBands() { 
+
+  
+  var bandChoice = searchTerm;
+  var formSrchTerm = bandChoice.replace(/ /g, "+");
+
+  request ("https://rest.bandsintown.com/artists/" + formSrchTerm + "/events?app_id=codingbootcamp", function(error, response, body) {
+
+  // If the request was successful...
+  if (!error && response.statusCode === 200) {
+
+    // Then log the body from the site!
+    // console.log(JSON.parse(body));
+
+    var data = (JSON.parse(body));
+
+for (var i=0; i<data.length; i++){
+    console.log("Venue Name: " + data[i].venue.name);
+    console.log("Venue Location: " + data[i].venue.city + " " + data[i].venue.region);
+    
+    var newDate = moment(data[i].datetime).format("dddd, MMMM Do YYYY, h:mm:ss a");
+    
+    console.log("Event Date: " + newDate);
+    console.log("----------------------------");
+}
+  }
+});
+
+
+}
 
 function spotifySearch(searchTerm) {
 
